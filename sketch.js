@@ -1,13 +1,14 @@
-
 let clusterSize = 20;
 let clusterNumbers = 5;
-let connections = 10;
+let connections = 12;
 
 let margin = 100;
 let sizeMax = 20;
 let sizeMin = 10;
 let custers = [];
 
+let canvasWidth = 1200;
+let canvasHeight = 800;
 
 function table() {
   console.table(points[0].partners);
@@ -16,9 +17,10 @@ function table() {
 function createCluster() {
   for (var c = 0; c < clusterNumbers; c++) {
     let points = [];
+    let clusterColor = color(random(0, 255), random(0, 255), random(0, 255));
 
     for (var i = 0; i < clusterSize; i++) {
-      points.push(new Point());
+      points.push(new Point(clusterColor));
     }
 
     console.log("points: ", points);
@@ -40,7 +42,7 @@ function createCluster() {
 }
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(canvasWidth, canvasHeight);
   createCluster();
 }
 
@@ -54,9 +56,10 @@ function draw() {
 }
 
 class Point {
-  constructor() {
-    this.x = random(0 + margin, 500 - margin);
-    this.y = random(0 + margin, 500 - margin);
+  constructor(color) {
+
+    this.x = random(margin, canvasWidth - margin);
+    this.y = random(margin, canvasHeight - margin);
 
     this.xOrigen = this.x;
     this.yOrigen = this.y;
@@ -70,6 +73,9 @@ class Point {
     this.size = random(sizeMin, sizeMax);
 
     this.partners = [];
+
+    // random color
+    this.color = color; //color(random(0, 255), random(0, 255), random(0, 255));
   }
 
   move() {
@@ -78,11 +84,11 @@ class Point {
 
     circle(this.x, this.y, this.size);
 
-    fill(color(255, 204, 0));
+    fill(this.color);
     ellipse(this.x, this.y, this.size);
 
     for (var i = 0; i < this.partners.length - 1; i++) {
-      stroke(color(255, 204, 0));
+      stroke(this.color);
       line(this.partners[i].x, this.partners[i].y, this.x, this.y);
     }
   }
