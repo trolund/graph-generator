@@ -1,6 +1,6 @@
-let clusterSize = 20;
-let clusterNumbers = 2;
-let connections = 10;
+let clusterSize = 5;
+let clusterNumbers = 1;
+let connections = 2;
 
 let margin = 100;
 let sizeMax = 20;
@@ -14,11 +14,8 @@ let smoothAnimation = true;
 
 let bgColor;
 
-let x, y;
-let speed;
-
 function table() {
-  console.table(points[0].partners);
+  console.log(custers);
 }
 
 function createCluster() {
@@ -34,8 +31,12 @@ function createCluster() {
 
     for (var j = 0; j < clusterSize; j++) {
       let partIndex = [];
-      for (var u = 0; u < connections; u++) {
+      while (partIndex.length < connections) {
         var pos = round(random(0, clusterSize - 1));
+        if (pos == j) {
+          continue;
+        }
+
         if (!partIndex.includes(pos)) {
           partIndex.push(pos);
           console.log("con", points[pos], "pos: ", pos);
@@ -52,10 +53,6 @@ function setup() {
   createCanvas(canvasWidth, canvasHeight);
   createCluster();
 
-  x = 20;
-  y = 20;
-  speed = 2;
-
   bgColor = random(0, 255);
 }
 
@@ -70,7 +67,6 @@ function draw() {
 
 class Point {
   constructor(color) {
-
     this.x = random(margin, canvasWidth - margin);
     this.y = random(margin, canvasHeight - margin);
 
