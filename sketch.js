@@ -12,10 +12,10 @@ let canvasHeight = 500;
 
 let smoothAnimation = true;
 
+let bgColor;
+
 let x, y;
 let speed;
-
-
 
 function table() {
   console.table(points[0].partners);
@@ -55,25 +55,17 @@ function setup() {
   x = 20;
   y = 20;
   speed = 2;
+
+  bgColor = random(0, 255);
 }
 
 function draw() {
-  background(250);
+  background(bgColor);
   for (c = 0; c < clusterNumbers; c++) {
     for (i = 0; i < clusterSize; i++) {
       custers[c][i].move();
     }
   }
-
-  // rect(x, y, 20, 20);
-
-  // x += speed;
-  // if (x > canvasWidth || x < 0) {
-  //   speed *= -1;
-  // }
-
-
-
 }
 
 class Point {
