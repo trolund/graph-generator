@@ -1,14 +1,21 @@
 let clusterSize = 20;
-let clusterNumbers = 5;
-let connections = 12;
+let clusterNumbers = 2;
+let connections = 10;
 
 let margin = 100;
 let sizeMax = 20;
 let sizeMin = 10;
 let custers = [];
 
-let canvasWidth = 1200;
-let canvasHeight = 800;
+let canvasWidth = 800;
+let canvasHeight = 500;
+
+let smoothAnimation = true;
+
+let x, y;
+let speed;
+
+
 
 function table() {
   console.table(points[0].partners);
@@ -44,6 +51,10 @@ function createCluster() {
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   createCluster();
+
+  x = 20;
+  y = 20;
+  speed = 2;
 }
 
 function draw() {
@@ -53,6 +64,16 @@ function draw() {
       custers[c][i].move();
     }
   }
+
+  // rect(x, y, 20, 20);
+
+  // x += speed;
+  // if (x > canvasWidth || x < 0) {
+  //   speed *= -1;
+  // }
+
+
+
 }
 
 class Point {
@@ -67,8 +88,8 @@ class Point {
     this.xMove = random(1, 3);
     this.yMove = random(1, 3);
 
-    this.xBound = random(100, 200);
-    this.yBound = random(100, 200);
+    this.xBound = this.xOrigen + random(100, 200);
+    this.yBound = this.yOrigen + random(100, 200);
 
     this.size = random(sizeMin, sizeMax);
 
@@ -79,9 +100,27 @@ class Point {
   }
 
   move() {
-    this.x += random(-this.xMove, this.xMove);
-    this.y += random(-this.yMove, this.yMove);
+    this.draw();
 
+    if (smoothAnimation) {
+      this.x += this.xMove;
+      if (this.x > (canvasWidth - this.size / 2) || this.x < (0 + this.size / 2)) {
+        this.xMove *= -1;
+      }
+
+      this.y += this.yMove;
+      if (this.y > (canvasHeight - this.size / 2) || this.y < (0 + this.size / 2)) {
+        this.yMove *= -1;
+      }
+    } else {
+      this.x += random(-this.xMove, this.xMove);
+      this.y += random(-this.yMove, this.yMove);
+    }
+
+
+  }
+
+  draw() {
     circle(this.x, this.y, this.size);
 
     fill(this.color);
