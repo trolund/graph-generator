@@ -1,17 +1,15 @@
 let clusterSize = 5;
 let clusterNumbers = 1;
 let connections = 2;
-
 let margin = 100;
-let sizeMax = 20;
-let sizeMin = 10;
 let custers = [];
-
 let canvasWidth = 800;
 let canvasHeight = 500;
-
 let smoothAnimation = true;
-
+let maxSpeed = 3;
+let minSpeed = 0;
+let sizeMax = 20;
+let sizeMin = 10;
 let bgColor;
 
 function table() {
@@ -73,8 +71,8 @@ class Point {
     this.xOrigen = this.x;
     this.yOrigen = this.y;
 
-    this.xMove = random(1, 3);
-    this.yMove = random(1, 3);
+    this.xMove = random(minSpeed, maxSpeed);
+    this.yMove = random(minSpeed, maxSpeed);
 
     this.xBound = this.xOrigen + random(100, 200);
     this.yBound = this.yOrigen + random(100, 200);
